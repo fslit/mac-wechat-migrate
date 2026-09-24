@@ -32,15 +32,15 @@ arp -an | grep 192.168.x.y    # 看是 (incomplete) 还是有 MAC
 netstat -rn -f inet | head -20
 ```
 
-**必现组合**：`Thunderbolt Bridge = 192.168.21.1/16`（掩码写成了 `255.255.0.0`），`Wi-Fi = 192.168.21.34/24`。
+**必现组合**：`Thunderbolt Bridge = 192.168.50.1/16`（掩码写成了 `255.255.0.0`），`Wi-Fi = 192.168.50.34/24`。
 
 最长前缀匹配下 **/24 赢**，于是发往对端雷雳地址的包全被丢给 Wi-Fi → Wi-Fi 网段上当然没人应答 → 内核给它写一条 **REJECT 主机路由**，之后连 ping 都立刻失败：
 
 ```
-route to: 192.168.21.2
+route to: 192.168.50.2
  interface: en0
      flags: <UP,HOST,REJECT,DONE,LLINFO,WASCLONED,IFSCOPE,IFREF>
-arp: (192.168.21.2) at (incomplete) on en0 ifscope
+arp: (192.168.50.2) at (incomplete) on en0 ifscope
 ```
 
 **`route -n get` 里出现 `REJECT` 就基本确诊**，线、对端、共享设置都不用再查了。
@@ -54,7 +54,7 @@ arp: (192.168.21.2) at (incomplete) on en0 ifscope
 
 ```bash
 sudo networksetup -setmanual "Thunderbolt Bridge" 192.168.99.1 255.255.255.0
-sudo route delete 192.168.21.2      # 清掉那条 REJECT 缓存
+sudo route delete 192.168.50.2      # 清掉那条 REJECT 缓存
 ```
 
 只想快速恢复也可以把掩码改回 `/24`（此时两条路由前缀相同，靠网络服务顺序决胜负，雷雳网桥排在 Wi-Fi 前才赢——能用但脆弱）。
