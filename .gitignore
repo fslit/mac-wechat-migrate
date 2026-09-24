@@ -1,0 +1,41 @@
+# ---- 本工具产生的工作文件（含你的真实路径与文件清单，不要提交）----
+.wx_export_work/
+.wx_restore_work/
+*.log
+done.txt
+errors.txt
+manifest.txt
+current.list
+current.tar
+export_list.bin
+
+# ---- 真实数据（绝对不能提交）----
+chunks/
+part-*.tar
+part-*.list
+*.tar
+*.tar.gz
+
+# 微信数据目录（万一有人在仓库根目录里操作过）
+xwechat_files/
+app_data/
+app_data\confsdk/
+
+# ---- macOS ----
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+.fseventsd
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# ---- 编辑器 ----
+.vscode/
+.idea/
+*.swp

@@ -1,0 +1,5 @@
+# 脚本统一用 LF，避免在 Windows 上 clone 后 CRLF 导致 shebang 失效
+* text=auto eol=lf
+*.sh text eol=lf
+*.py text eol=lf
+*.md text eol=lf
